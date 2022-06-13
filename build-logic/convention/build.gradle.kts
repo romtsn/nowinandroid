@@ -29,7 +29,7 @@ dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.spotless.gradlePlugin)
-    compileOnly("org.ow2.asm:asm-commons:7.0")
+    implementation("org.ow2.asm:asm-commons:9.2")
 }
 
 gradlePlugin {
