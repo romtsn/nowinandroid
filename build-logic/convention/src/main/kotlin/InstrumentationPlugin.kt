@@ -11,6 +11,8 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.objectweb.asm.ClassVisitor
+import org.objectweb.asm.commons.ClassRemapper
+import org.objectweb.asm.commons.SimpleRemapper
 
 class InstrumentationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -49,21 +51,5 @@ abstract class InstrumentationVisitorFactory :
         classContext: ClassContext,
         nextClassVisitor: ClassVisitor
     ): ClassVisitor =
-        InstrumentationClassVisitor(instrumentationContext.apiVersion.get(), nextClassVisitor)
-
-    class InstrumentationClassVisitor(asmVersion: Int, nextClassVisitor: ClassVisitor) :
-        ClassVisitor(asmVersion, nextClassVisitor) {
-
-        override fun visit(
-            version: Int,
-            access: Int,
-            name: String?,
-            signature: String?,
-            superName: String?,
-            interfaces: Array<out String>?
-        ) {
-            super.visit(version, access, name, signature, superName, interfaces)
-            println("[SENTRY] $name")
-        }
-    }
+        ClassRemapper(nextClassVisitor, SimpleRemapper("", ""))
 }
