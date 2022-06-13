@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.spotless.gradlePlugin)
+    compileOnly("org.ow2.asm:asm-commons:7.0")
 }
 
 gradlePlugin {
@@ -68,6 +69,10 @@ gradlePlugin {
         register("spotless") {
             id = "nowinandroid.spotless"
             implementationClass = "SpotlessConventionPlugin"
+        }
+        register("instrumentation") {
+            id = "nowinandroid.instrumentation"
+            implementationClass = "InstrumentationPlugin"
         }
     }
 }
